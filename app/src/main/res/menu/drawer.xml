@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_sessions"
+            android:checked="true"
+            android:icon="@drawable/ic_event_available_24dp"
+            android:title="@string/nav_item_sessions" />
+        <item
+            android:id="@+id/navigation_item_user_settings"
+            android:icon="@drawable/ic_account_circle_24dp"
+            android:title="@string/nav_item_account" />
+        <item
+            android:id="@+id/navigation_item_extras"
+            android:icon="@drawable/ic_info_outline_24dp"
+            android:title="@string/nav_item_extras" />
+    </group>
+
+</menu>
