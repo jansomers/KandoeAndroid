@@ -36,7 +36,8 @@
         <activity android:name=".kandoeproject.application.view.SessionActivity" />
         <activity
             android:name=".kandoeproject.application.view.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".kandoeproject.application.view.GameActivity"></activity>
     </application>
 
 </manifest>

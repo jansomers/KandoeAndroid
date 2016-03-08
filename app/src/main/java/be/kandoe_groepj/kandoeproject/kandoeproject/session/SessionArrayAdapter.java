@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
+
 /**
  * Created by Jan on 3/03/2016.
  */

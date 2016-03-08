@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.R;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

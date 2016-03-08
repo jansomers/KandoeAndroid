@@ -13,29 +13,27 @@ import java.util.Collections;
 import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.R;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 
 /**
- * Created by Jan on 7/03/2016.
+ * Created by Jan on 8/03/2016.
  */
-public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionViewHolder> {
-
+public class CardAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
     List<Session> data = Collections.emptyList();
     Context context;
 
     public SessionAdapter(Context context, List<Session> data) {
-        inflater =LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
         this.data = data;
-        this.context =context;
+        this.context = context;
     }
 
-    public void add(Session session){
+    public void add(Session session) {
         data.add(session);
         notifyDataSetChanged();
     }
 
-    public void addAll(List<Session> sessions){
+    public void addAll(List<Session> sessions) {
         data.addAll(sessions);
         notifyDataSetChanged();
     }
@@ -52,12 +50,14 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     public List<Session> getData() {
         return data;
     }
+
     public Session getOne(int position) {
         return data.get(position);
     }
+
     @Override
     public SessionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.session_item, parent,false);
+        View view = inflater.inflate(R.layout.session_item, parent, false);
         return new SessionViewHolder(view);
     }
 
@@ -71,25 +71,22 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
             holder.statusImg.setImageResource(R.drawable.ic_notifications_on_24dp);
             holder.statusImg.setColorFilter(context.getResources().getColor(R.color.colorAccent));
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return 0;
     }
 
-    class SessionViewHolder extends RecyclerView.ViewHolder {
-        TextView sessionTitle;
-        ImageView statusImg;
-        TextView userTurn;
+    class CardViewHolder extends RecyclerView.ViewHolder {
 
-        public SessionViewHolder(View itemView) {
+
+        public CardViewHolder(View itemView) {
             super(itemView);
-            sessionTitle = (TextView) itemView.findViewById(R.id.sessionTitle);
-            statusImg = (ImageView) itemView.findViewById(R.id.sessionStatus);
-            userTurn = (TextView) itemView.findViewById(R.id.userTurn);
+
 
         }
     }
 }
+
+

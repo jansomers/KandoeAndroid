@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

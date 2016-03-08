@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiteSmoke"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <android.support.v7.widget.Toolbar
@@ -20,9 +22,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerSessions"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
 
             </android.support.v7.widget.RecyclerView>
 
         </android.support.v4.widget.SwipeRefreshLayout>
-</RelativeLayout>
+</LinearLayout>
