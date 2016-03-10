@@ -7,31 +7,20 @@ import java.util.Map;
 /**
  * Created by Jan on 3/03/2016.
  */
-public class Session implements Serializable{
-    public String _id;
-
-
-    public String _groupId;
-    public String[] _userIds;
-    public String _name;
-
-    public String get_name() {
-        return _name;
-    }
-
-    public void set_name(String _name) {
-        this._name = _name;
-    }
-
-    public String _themeId;
-    public String _creatorId;
+public class Session implements Serializable {
+    private String _id;
+    private String _groupId;
+    private String[] _userIds;
+    private String _name;
+    private String _themeId;
+    private String _creatorId;
     /* _startDate format: dd/mm/yyyy hh:mm */
-    public String _startDate;
-    public boolean _inProgress;
-    public boolean _realTime;
-    public int _endPoint;
-    public boolean _allowComment;
-    public int _turnTimeMin;
+    private String _startDate;
+    private boolean _inProgress;
+    private boolean _realTime;
+    private int _endPoint;
+    private boolean _allowComment;
+    private int _turnTimeMin;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String get_groupId() {
@@ -56,6 +45,14 @@ public class Session implements Serializable{
 
     public void set_themeId(String _themeId) {
         this._themeId = _themeId;
+    }
+
+    public String get_name() {
+        return _name;
+    }
+
+    public void set_name(String _name) {
+        this._name = _name;
     }
 
     public String get_creatorId() {

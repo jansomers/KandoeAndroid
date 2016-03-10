@@ -8,6 +8,15 @@ public class Card {
     private String _id;
     private String _name;
     private String _themeId;
+    private String _cardPosition = "0";
+
+    public String get_cardPosition() {
+        return _cardPosition;
+    }
+
+    public void set_cardPosition(String _cardPosition) {
+        this._cardPosition = _cardPosition;
+    }
 
     public String get_id() {
         return _id;

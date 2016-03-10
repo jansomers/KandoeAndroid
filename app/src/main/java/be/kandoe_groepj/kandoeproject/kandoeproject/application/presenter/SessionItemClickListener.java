@@ -39,7 +39,7 @@ public class SessionItemClickListener implements RecyclerView.OnItemTouchListene
     @Override
     public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         View child = rv.findChildViewUnder(e.getX(),e.getY());
-        if (child!=null && sessionClickListener!=null & gestureDetector.onTouchEvent(e)) {
+        if (child!=null && sessionClickListener!=null && gestureDetector.onTouchEvent(e)) {
             sessionClickListener.onClick(child, rv.getChildAdapterPosition(child));
 
         }

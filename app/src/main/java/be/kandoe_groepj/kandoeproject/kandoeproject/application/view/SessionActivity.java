@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -54,7 +55,7 @@ public class SessionActivity extends AppCompatActivity {
         prepareRetrofit();
         prepareData();
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new MyLinearLayoutManager(this));
+        recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         recyclerView.addOnItemTouchListener(new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
             @Override
             public void onClick(View view, int position) {
