@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -84,15 +85,18 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private void prepareData() {
+        Log.d("In sessions", "IN PREPARE DATA");
         sessionApi.getSessions().enqueue(new Callback<List<Session>>() {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
+                Log.d("Session", "In response sessions");
                 adapter.addAll(response.body());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<Session>> call, Throwable t) {
+                Log.d("Session","In failure sessions");
                 Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG);
             }
         });

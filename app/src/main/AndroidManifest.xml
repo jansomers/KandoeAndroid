@@ -34,10 +34,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".kandoeproject.application.view.SessionActivity" />
-        <activity
-            android:name=".kandoeproject.application.view.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".kandoeproject.application.view.GameActivity"></activity>
+        <activity android:name=".kandoeproject.application.view.GameActivity" />
+        <activity android:name=".kandoeproject.application.view.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
