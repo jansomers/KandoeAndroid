@@ -15,15 +15,12 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Card;
 
-/**
- * Created by Jan on 8/03/2016.
- */
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private LayoutInflater inflater;
-    List<Card> data = Collections.emptyList();
-    Context context;
-    View viewSelected =null;
-    Card cardSelected =null;
+    private List<Card> data = Collections.emptyList();
+    private Context context;
+    private View viewSelected = null;
+    private Card cardSelected = null;
 
     public CardAdapter(Context context, List<Card> data) {
         inflater = LayoutInflater.from(context);
@@ -67,10 +64,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
         Card current = data.get(position);
-        Log.d("TEST", ("NAME CURRENT====== "+current.get_name()));
-        holder.cardName.setText(current.get_name());
-        holder.priority.setText(current.get_cardPosition());
-
+        Log.d("TEST", ("NAME CURRENT====== " + current.getName()));
+        holder.cardName.setText(current.getName());
+        holder.priority.setText(current.getCardPosition());
     }
 
     @Override
@@ -83,17 +79,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         viewSelected = view;
         viewSelected.setSelected(true);
         cardSelected = data.get(position);
-        Toast.makeText(context,"Selected: " + cardSelected.get_name(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Selected: " + cardSelected.getName(),Toast.LENGTH_SHORT).show();
         notifyDataSetChanged();
     }
 
     public boolean hasSelectedItem() {
-        if (viewSelected!=null) return true;
-        return false;
+        return viewSelected != null;
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
-
         TextView cardName;
         TextView priority;
 
@@ -101,7 +95,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             super(itemView);
             cardName = (TextView) itemView.findViewById(R.id.cardName);
             priority = (TextView) itemView.findViewById(R.id.priority);
-
         }
     }
 }

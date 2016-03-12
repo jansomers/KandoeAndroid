@@ -64,7 +64,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     @Override
     public void onBindViewHolder(SessionViewHolder holder, int position) {
         Session current = data.get(position);
-        holder.sessionTitle.setText(current.get_name());
+        holder.sessionTitle.setText(current.getName());
         if (position == 1) {
             holder.userTurn.setTextColor(context.getResources().getColor(R.color.colorAccent));
             holder.userTurn.setTypeface(null, Typeface.BOLD);

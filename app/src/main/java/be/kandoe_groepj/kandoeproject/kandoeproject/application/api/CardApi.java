@@ -7,9 +7,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-/**
- * Created by Jan on 8/03/2016.
- */
 public interface CardApi {
 
     @GET("themes/{themeId}/cards")

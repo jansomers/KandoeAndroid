@@ -1,114 +1,121 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Jan on 3/03/2016.
- */
 public class Session implements Serializable {
-    private String _id;
-    private String _groupId;
-    private String[] _userIds;
-    private String _name;
-    private String _themeId;
-    private String _creatorId;
-    /* _startDate format: dd/mm/yyyy hh:mm */
-    private String _startDate;
-    private boolean _inProgress;
-    private boolean _realTime;
-    private int _endPoint;
-    private boolean _allowComment;
-    private int _turnTimeMin;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    //@SerializedName("_id")
+    private String id;
+    private String groupId;
+    private String[] userIds;
+    private String name;
+    private String themeId;
+    private String creatorId;
+    private String startDate; //format: dd/mm/yyyy hh:mm
+    private boolean inProgress;
+    private boolean realTime;
+    private int endPoint;
+    private boolean allowComment;
+    private int turnTimeMin;
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
-    public String get_groupId() {
-        return _groupId;
+    public String getId() {
+        return id;
     }
 
-    public void set_groupId(String _groupId) {
-        this._groupId = _groupId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String[] get_userIds() {
-        return _userIds;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void set_userIds(String[] _userIds) {
-        this._userIds = _userIds;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public String get_themeId() {
-        return _themeId;
+    public String[] getUserIds() {
+        return userIds;
     }
 
-    public void set_themeId(String _themeId) {
-        this._themeId = _themeId;
+    public void setUserIds(String[] userIds) {
+        this.userIds = userIds;
     }
 
-    public String get_name() {
-        return _name;
+    public String getName() {
+        return name;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String get_creatorId() {
-        return _creatorId;
+    public String getThemeId() {
+        return themeId;
     }
 
-    public void set_creatorId(String _creatorId) {
-        this._creatorId = _creatorId;
+    public void setThemeId(String themeId) {
+        this.themeId = themeId;
     }
 
-    public String get_startDate() {
-        return _startDate;
+    public String getCreatorId() {
+        return creatorId;
     }
 
-    public void set_startDate(String _startDate) {
-        this._startDate = _startDate;
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
-    public boolean is_inProgress() {
-        return _inProgress;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void set_inProgress(boolean _inProgress) {
-        this._inProgress = _inProgress;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public boolean is_realTime() {
-        return _realTime;
+    public boolean isInProgress() {
+        return inProgress;
     }
 
-    public void set_realTime(boolean _realTime) {
-        this._realTime = _realTime;
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 
-    public int get_endPoint() {
-        return _endPoint;
+    public boolean isRealTime() {
+        return realTime;
     }
 
-    public void set_endPoint(int _endPoint) {
-        this._endPoint = _endPoint;
+    public void setRealTime(boolean realTime) {
+        this.realTime = realTime;
     }
 
-    public boolean is_allowComment() {
-        return _allowComment;
+    public int getEndPoint() {
+        return endPoint;
     }
 
-    public void set_allowComment(boolean _allowComment) {
-        this._allowComment = _allowComment;
+    public void setEndPoint(int endPoint) {
+        this.endPoint = endPoint;
     }
 
-    public int get_turnTimeMin() {
-        return _turnTimeMin;
+    public boolean isAllowComment() {
+        return allowComment;
     }
 
-    public void set_turnTimeMin(int _turnTimeMin) {
-        this._turnTimeMin = _turnTimeMin;
+    public void setAllowComment(boolean allowComment) {
+        this.allowComment = allowComment;
+    }
+
+    public int getTurnTimeMin() {
+        return turnTimeMin;
+    }
+
+    public void setTurnTimeMin(int turnTimeMin) {
+        this.turnTimeMin = turnTimeMin;
     }
 
     public Map<String, Object> getAdditionalProperties() {
@@ -118,14 +125,4 @@ public class Session implements Serializable {
     public void setAdditionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
     }
-
-    public String get_id() {
-
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
 }

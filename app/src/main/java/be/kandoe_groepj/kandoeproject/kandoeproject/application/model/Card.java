@@ -1,44 +1,41 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
-/**
- * Created by Jan on 8/03/2016.
- */
 public class Card {
 
-    private String _id;
-    private String _name;
-    private String _themeId;
-    private String _cardPosition = "0";
+    private String id;
+    private String name;
+    private String themeId;
+    private String cardPosition = "0";
 
-    public String get_cardPosition() {
-        return _cardPosition;
+    public String getId() {
+        return id;
     }
 
-    public void set_cardPosition(String _cardPosition) {
-        this._cardPosition = _cardPosition;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String get_id() {
-        return _id;
+    public String getName() {
+        return name;
     }
 
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String get_name() {
-        return _name;
+    public String getThemeId() {
+        return themeId;
     }
 
-    public void set_name(String _name) {
-        this._name = _name;
+    public void setThemeId(String themeId) {
+        this.themeId = themeId;
     }
 
-    public String get_themeId() {
-        return _themeId;
+    public String getCardPosition() {
+        return cardPosition;
     }
 
-    public void set_themeId(String _themeId) {
-        this._themeId = _themeId;
+    public void setCardPosition(String cardPosition) {
+        this.cardPosition = cardPosition;
     }
 }

@@ -55,7 +55,8 @@ public class GameActivity extends AppCompatActivity {
     CardAdapter adapter;
     CardApi cardApi;
     PositionCircleView positionCircleView;
-    private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
+    //private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
+    private final String BASE_URL ="http://10.0.2.2:8080/api/" ;
     private int circleLayoutMargin = 5*2;
     private int circleParamWidth = 120;
     private int circleParamHeight = 120;
@@ -78,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
                 Toast.makeText(GameActivity.this, "onCardClick" + position, Toast.LENGTH_SHORT).show();
                 adapter.selectItem(view, position);
                 recyclerView.smoothScrollToPosition(position);
-                Log.d("Cardtest", "Item: " + adapter.getOne(position).get_name() + " is selected? " + view.isSelected());
+                Log.d("Cardtest", "Item: " + adapter.getOne(position).getName() + " is selected? " + view.isSelected());
                 if (adapter.hasSelectedItem()) {
                     makeMoveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
                     makeMoveButton.setClickable(true);
@@ -158,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void prepareData() {
         Session session = (Session) getIntent().getSerializableExtra("Session");
-        cardApi.getCards(session.get_themeId()).enqueue(new Callback<List<Card>>() {
+        cardApi.getCards(session.getThemeId()).enqueue(new Callback<List<Card>>() {
             @Override
             public void onResponse(Call<List<Card>> call, Response<List<Card>> response) {
                 Log.d("TEST","IN CARDRESPONSE ========");

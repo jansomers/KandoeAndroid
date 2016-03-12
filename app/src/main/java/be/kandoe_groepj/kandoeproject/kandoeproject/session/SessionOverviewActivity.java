@@ -14,14 +14,11 @@ import butterknife.ButterKnife;
 
 public class SessionOverviewActivity extends AppCompatActivity {
 
-    SessionOverviewPresenter presenter;
-
+    private SessionOverviewPresenter presenter;
     @Bind(R.id.sessionOverViewListView)
     ListView sessionOverviewList;
-    SessionArrayAdapter adapterSession;
-
-    List<Session> sessionList;
-
+    private SessionArrayAdapter adapterSession;
+    private List<Session> sessionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +30,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
         presenter.prepareRetrofit();
         sessionList = new ArrayList<>();
         prepareSessionListView(sessionList);
-
-
     }
 
     private List<Session> prepareData() {
@@ -44,10 +39,11 @@ public class SessionOverviewActivity extends AppCompatActivity {
         System.out.println(sessionList.get(1).getName());
         prepareSessionListView(sessionList);*/
         return presenter.getData();
-       
     }
 
     private void prepareSessionListView(List<Session> sessionList) {
+        System.out.println("JASPER HERE: " + sessionList);
+        
 //        Session [] sessions = new Session[sessionList.size()];
 //        System.out.println("SESSIONLIST SIZE: " + sessionList.size());
 //        int i = 0;
