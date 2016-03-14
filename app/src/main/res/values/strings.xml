@@ -29,10 +29,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="register">REGISTER</string>
-    <string name="login">LOGIN</string>
-    <string name="use_fb">USE FACEBOOK</string>
-    <string name="error_invalid_credentials">Foutieve inloggegevens</string>
-    <string name="wrong_password_input">wrongpassword</string>
-    <string name="wrong_email_input">wrongemail@wrongdomain.com</string>
+    <string name="RoundedFont" />
 </resources>
