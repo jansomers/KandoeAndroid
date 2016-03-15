@@ -1,19 +1,14 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.login;
 
-import com.google.gson.JsonArray;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.transform.stream.StreamResult;
 
 public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
 
@@ -57,15 +52,11 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                             System.out.println("RECEIVED A NOPE");
                             return null;
                         } else {
-                            System.out.println("Jasper: " + nextName.replace("_", ""));
-                            System.out.println("Jasper: " + Arrays.toString(clazz.getFields()));
                             Field field = clazz.getField(nextName.replace("_", ""));
                             field.setAccessible(true);
                             field.set(o, nextString);
                         }
                     } else {
-                        System.out.println("Jasper: " + nextName.replace("_", ""));
-                        System.out.println("Jasper: " + Arrays.toString(clazz.getDeclaredFields()));
                         Field field = clazz.getDeclaredField(nextName.replace("_", ""));
                         field.setAccessible(true);
                         field.set(o, nextString);

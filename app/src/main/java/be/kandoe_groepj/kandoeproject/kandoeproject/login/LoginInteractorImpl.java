@@ -72,7 +72,6 @@ public class LoginInteractorImpl implements LoginInteractor {
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.body() != null) {
                             String token = response.body().message;
-                            System.out.println("JASPER REGISTER TOKEN: " + token);
                             TokenIO.saveToken(token);
                             listener.onSuccess();
                         } else {

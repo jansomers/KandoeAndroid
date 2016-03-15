@@ -33,11 +33,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
         String token = TokenIO.loadToken();
         if (token.equals("")) {
-            System.out.println("JASPER TOKEN IS NULL");
+
         } else {
-            System.out.println("JASPER TOKEN IS: " + token);
+
             TokenIO.removeToken();
-            System.out.println("REMOVING TOKEN");
+
         }
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void navigateToHome() {
         String token = TokenIO.loadToken();
         startActivity(new Intent(this, SessionActivity.class));
+
         finish();
     }
 }

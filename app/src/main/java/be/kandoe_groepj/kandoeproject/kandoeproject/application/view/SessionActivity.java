@@ -40,19 +40,35 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+
     @Bind(R.id.recyclerSessions)
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     @Bind(R.id.swipeSession)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    public SessionAdapter getAdapter() {
+        return adapter;
+    }
 
     SessionAdapter adapter;
     SessionApi sessionApi;
 
 
+    public void initSharedPref() {
+        TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
+        initSharedPref();
         setContentView(R.layout.activity_session);
         ButterKnife.bind(this);
         //Toolbar settings
@@ -60,7 +76,7 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
 
         adapter = new SessionAdapter(this,new ArrayList<Session>());
         prepareRetrofit();
-        if (!TokenIO.loadToken().equals(""))prepareData(this);
+        if (!getIntent().getBooleanExtra("isTest", false)) prepareData(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         recyclerView.addOnItemTouchListener(new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
