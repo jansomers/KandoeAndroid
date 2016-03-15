@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void navigateToHome() {
-        TokenIO.getUserId();
+        String token = TokenIO.loadToken();
         startActivity(new Intent(this, SessionActivity.class));
         finish();
     }

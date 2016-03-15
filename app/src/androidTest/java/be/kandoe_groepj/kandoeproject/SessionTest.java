@@ -1,5 +1,6 @@
 package be.kandoe_groepj.kandoeproject;
 
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
@@ -9,10 +10,13 @@ import org.junit.runner.RunWith;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.view.SessionActivity;
 import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.login.LoginActivity;
 
-/**
- * Created by Jan on 15/03/2016.
- */
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
+
 @RunWith(AndroidJUnit4.class)
 public class SessionTest {
 
@@ -26,7 +30,7 @@ public class SessionTest {
         main.get().prepareData(new OnFinishListener() {
             @Override
             public void finished() {
-
+                onView(allOf(withId(R.layout.session_item))).check(ViewAssertions.matches(isDisplayed()));
             }
         });
     }
