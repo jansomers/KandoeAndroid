@@ -154,17 +154,18 @@ public class GameActivity extends AppCompatActivity {
 
     private void prepareData() {
         Session session = (Session) getIntent().getSerializableExtra("Session");
+        Log.d("CardPreparedata", "Theme id from session: " + session.getThemeId());
         cardApi.getCards(session.getThemeId()).enqueue(new Callback<List<Card>>() {
             @Override
             public void onResponse(Call<List<Card>> call, Response<List<Card>> response) {
-                Log.d("TEST","IN CARDRESPONSE ========");
+                Log.d("Card","IN CARDRESPONSE");
                 adapter.addAll(response.body());
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<List<Card>> call, Throwable t) {
-                Log.d("TEST", "CARDFAILED==============");
+                Log.d("Card", "IN CARDFAILURE");
                 Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG);
             }
         });

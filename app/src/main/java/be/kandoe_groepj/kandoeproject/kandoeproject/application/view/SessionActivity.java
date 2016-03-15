@@ -18,10 +18,10 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionAdapter;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionItemClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
 import be.kandoe_groepj.kandoeproject.kandoeproject.login.TypescriptTypeAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,7 +88,7 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private void prepareData() {
-        sessionApi.getSessions().enqueue(new Callback<List<Session>>() {
+        sessionApi.getUserSessions(TokenIO.loadToken()).enqueue(new Callback<List<Session>>() {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
                 adapter.addAll(response.body());
