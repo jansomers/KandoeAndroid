@@ -13,10 +13,10 @@ public interface SessionApi {
     @GET("circlesessions")
     Call<List<Session>> getSessions();
 
-    @GET("/circlesessions/{id}")
+    @GET("circlesessions/{id}")
     Call<Session> getSession(@Path("id") String id);
 
-    @GET("/user/circlesessions")
+    @GET("user/circlesessions")
     Call<List<Session>> getUserSessions(@Header("Bearer") String bearer);
 
     //Todo GET SESSIONCARDS

@@ -1,5 +1,6 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionAdapter;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionItemClickListener;
@@ -31,7 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SessionActivity extends AppCompatActivity {
+public class SessionActivity extends AppCompatActivity implements OnFinishListener {
 
     private final String BASE_URL = "http://10.0.3.2:8080/api/";
 
@@ -50,6 +52,7 @@ public class SessionActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
         setContentView(R.layout.activity_session);
         ButterKnife.bind(this);
         //Toolbar settings
@@ -57,7 +60,7 @@ public class SessionActivity extends AppCompatActivity {
 
         adapter = new SessionAdapter(this,new ArrayList<Session>());
         prepareRetrofit();
-        prepareData();
+        if (!TokenIO.loadToken().equals(""))prepareData(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         recyclerView.addOnItemTouchListener(new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
@@ -87,25 +90,27 @@ public class SessionActivity extends AppCompatActivity {
 
     }
 
-    private void prepareData() {
+    public void prepareData(final OnFinishListener callback) {
         sessionApi.getUserSessions(TokenIO.loadToken()).enqueue(new Callback<List<Session>>() {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
                 adapter.addAll(response.body());
                 adapter.notifyDataSetChanged();
+                callback.finished();
             }
 
             @Override
             public void onFailure(Call<List<Session>> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG).show();
+                callback.finished();
             }
         });
     }
 
     private void refreshSessions() {
         adapter.removeAll(adapter.getData());
-        prepareData();
+        prepareData(this);
         onSessionsLoadComplete();
     }
 
@@ -131,4 +136,8 @@ public class SessionActivity extends AppCompatActivity {
 //        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void finished() {
+
+    }
 }
