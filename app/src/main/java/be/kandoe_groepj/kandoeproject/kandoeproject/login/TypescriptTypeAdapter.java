@@ -97,7 +97,6 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                 }
             }
             in.endObject();
-            System.out.println("is o null ? " + (o == null));
             return o;
         } catch (InstantiationException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
