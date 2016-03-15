@@ -88,7 +88,6 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-
             }
         }));
 
