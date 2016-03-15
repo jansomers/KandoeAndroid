@@ -20,7 +20,9 @@ public class Session implements Serializable {
     private int endPoint;
     private boolean allowComment;
     private int turnTimeMin;
+    private boolean isPreGame;
     private Map<String, Object> additionalProperties = new HashMap<>();
+    private String currentPlayerId;
 
     public String getId() {
         return id;
@@ -124,5 +126,21 @@ public class Session implements Serializable {
 
     public void setAdditionalProperties(Map<String, Object> additionalProperties) {
         this.additionalProperties = additionalProperties;
+    }
+
+    public boolean isPreGame() {
+        return isPreGame;
+    }
+
+    public void setIsPreGame(boolean isPreGame) {
+        this.isPreGame = isPreGame;
+    }
+
+    public String getCurrentPlayerId() {
+        return currentPlayerId;
+    }
+
+    public void setCurrentPlayerId(String currentPlayerId) {
+        this.currentPlayerId = currentPlayerId;
     }
 }

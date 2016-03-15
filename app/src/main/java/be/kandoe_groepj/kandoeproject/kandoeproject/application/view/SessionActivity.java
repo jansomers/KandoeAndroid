@@ -10,15 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionAdapter;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionItemClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.login.TypescriptTypeAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -93,7 +97,8 @@ public class SessionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Session>> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG);
+                t.printStackTrace();
+                Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -111,7 +116,8 @@ public class SessionActivity extends AppCompatActivity {
     private void prepareRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(
+                        GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(Session.class, new TypescriptTypeAdapter<>(Session.class)).create()))
                 .build();
 
         sessionApi = retrofit.create(SessionApi.class);

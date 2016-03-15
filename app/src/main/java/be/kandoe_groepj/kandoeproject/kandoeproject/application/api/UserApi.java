@@ -11,4 +11,10 @@ public interface UserApi {
 
     @POST("user/login")
     Call<User> loginUser(@Body User user);
+
+    @POST("user/register")
+    Call<User> registerUser(@Body User user);
+
+    @POST("user/login-facebook")
+    Call<User> facebookLogin(@Body User user);
 }

@@ -1,5 +1,9 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.login;
 
+import android.app.Activity;
+
+import com.facebook.CallbackManager;
+
 public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListener {
 
     private LoginView loginView;
@@ -16,9 +20,19 @@ public class LoginPresenterImpl implements LoginPresenter, OnLoginFinishedListen
     }
 
     @Override
-    public void onError() {
+    public void register(String email, String password) {
+        loginInteractor.register(email, password, this);
+    }
+
+    @Override
+    public void loginFacebook(CallbackManager callbackManager, Activity activity) {
+        loginInteractor.loginFacebook(callbackManager, activity, this);
+    }
+
+    @Override
+    public void onError(String error) {
         if (loginView != null) {
-            loginView.setError();
+            loginView.setError(error);
         }
     }
 
