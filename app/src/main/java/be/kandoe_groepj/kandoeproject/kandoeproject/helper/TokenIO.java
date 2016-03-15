@@ -2,6 +2,12 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
 
 import android.content.SharedPreferences;
 import android.media.session.MediaSession;
+import android.util.Base64;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class TokenIO {
 
@@ -27,6 +33,19 @@ public class TokenIO {
             return sharedPreferences.getString("token", "");
         } else {
             throw new RuntimeException("Shared preferences not yet injected");
+        }
+    }
+
+    public static String getUserId() {
+        try {
+            String token = loadToken();
+            byte[] data = Base64.decode(token.split("\\.")[1], Base64.DEFAULT);
+            String rawTokenBody = new String(data, "UTF-8");
+            JSONObject tokenBody = new JSONObject(rawTokenBody);
+            return tokenBody.getString("_id");
+        } catch (UnsupportedEncodingException | JSONException  e) {
+            e.printStackTrace();
+            return "ERROR";
         }
     }
 
