@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -42,9 +41,6 @@ public class GameActivity extends AppCompatActivity {
 
     @Bind(R.id.playCircle)
     ImageView playCircle;
-
-    @Bind(R.id.sessionTitle)
-    TextView sessionTitle;
 
     ImageView prior1;
     ImageView prior2;
@@ -92,7 +88,6 @@ public class GameActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-
             }
         }));
 
