@@ -55,7 +55,7 @@ public class SessionActivity extends AppCompatActivity {
         //Toolbar settings
         configToolbar();
 
-        adapter = new SessionAdapter(this,new ArrayList<Session>());
+        adapter = new SessionAdapter(this, new ArrayList<Session>());
         prepareRetrofit();
         prepareData();
         recyclerView.setAdapter(adapter);
@@ -88,7 +88,9 @@ public class SessionActivity extends AppCompatActivity {
     }
 
     private void prepareData() {
-        sessionApi.getUserSessions(TokenIO.loadToken()).enqueue(new Callback<List<Session>>() {
+        String token = TokenIO.loadToken();
+        System.out.println("ok");
+        sessionApi.getUserSessions(token).enqueue(new Callback<List<Session>>() {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
                 adapter.addAll(response.body());

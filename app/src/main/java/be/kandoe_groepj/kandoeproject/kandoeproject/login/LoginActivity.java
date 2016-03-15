@@ -15,7 +15,6 @@ import com.facebook.FacebookSdk;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.view.SessionActivity;
 import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
-import be.kandoe_groepj.kandoeproject.kandoeproject.session.SessionOverviewActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
