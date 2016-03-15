@@ -1,21 +1,8 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.login;
 
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApi;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.SimpleResult;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;

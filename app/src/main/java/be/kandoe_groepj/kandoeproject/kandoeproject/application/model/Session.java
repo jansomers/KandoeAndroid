@@ -7,21 +7,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Session implements Serializable {
-    //@SerializedName("_id")
+    @SerializedName("_id")
     private String id;
+    @SerializedName("_groupId")
     private String groupId;
+    @SerializedName("_userIds")
     private String[] userIds;
+    @SerializedName("_name")
     private String name;
+    @SerializedName("_themeId")
     private String themeId;
+    @SerializedName("_creatorId")
     private String creatorId;
+    @SerializedName("_startDate")
     private String startDate; //format: dd/mm/yyyy hh:mm
+    @SerializedName("_inProgress")
     private boolean inProgress;
+    @SerializedName("_realTime")
     private boolean realTime;
+    @SerializedName("_endPoint")
     private int endPoint;
+    @SerializedName("_allowComment")
     private boolean allowComment;
+    @SerializedName("_turnTimeMin")
     private int turnTimeMin;
     private Map<String, Object> additionalProperties = new HashMap<>();
-
     public String getId() {
         return id;
     }

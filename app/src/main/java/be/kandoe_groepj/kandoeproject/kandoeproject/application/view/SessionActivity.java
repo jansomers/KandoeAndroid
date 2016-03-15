@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,10 +117,13 @@ public class SessionActivity extends AppCompatActivity {
     private void prepareRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(
+                        GsonConverterFactory.create(new GsonBuilder()/*.registerTypeAdapter(Session.class, new TypescriptTypeAdapter<>(Session.class))*/.create()))
                 .build();
 
         sessionApi = retrofit.create(SessionApi.class);
+
+
     }
 
 

@@ -17,7 +17,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private SessionOverviewPresenter presenter;
     @Bind(R.id.sessionOverViewListView)
     ListView sessionOverviewList;
-    private SessionArrayAdapter adapterSession;
+    //private SessionArrayAdapter adapterSession;
     private List<Session> sessionList;
 
     @Override

@@ -4,12 +4,9 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-
-import javax.xml.transform.stream.StreamResult;
 
 public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
 
@@ -51,7 +48,7 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                 } else {
                     System.out.println(nextName.replace("_", ""));
                     System.out.println(Arrays.toString(clazz.getFields()));
-                    Field field = clazz.getField(nextName.replace("_", ""));
+                    Field field = clazz.getDeclaredField(nextName.replace("_", ""));
                     field.setAccessible(true);
                     field.set(o, nextString);
                 }
