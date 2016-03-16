@@ -13,6 +13,7 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
@@ -91,24 +92,50 @@ public class LoginInteractorImpl implements LoginInteractor {
 
     private AccessToken accessToken;
     @Override
-    public void loginFacebook(CallbackManager callbackManager, Activity activity, OnLoginFinishedListener listener) {
+    public void loginFacebook(CallbackManager callbackManager, Activity activity, final OnLoginFinishedListener listener) {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 try {
                     accessToken = loginResult.getAccessToken();
-                    Profile profile = Profile.getCurrentProfile();
-                    String name = profile.getName();
-                    String id = profile.getId();
-                    URL smallImage = new URL("http://graph.facebook.com/" + id + "/picture?type=small");
-                    URL largeImage = new URL("http://graph.facebook.com/" + id + "/picture?type=large");
+                    final Profile profile = Profile.getCurrentProfile();
+                    final String name = profile.getName();
+                    final String id = profile.getId();
+                    final URL smallImage = new URL("http://graph.facebook.com/" + id + "/picture?type=small");
+                    final URL largeImage = new URL("http://graph.facebook.com/" + id + "/picture?type=large");
                     GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject object, GraphResponse response) {
-                            System.out.println(object);
-                            System.out.println("ok");
-                            //User user = new User();
-                            //UserApiFactory.getApi().facebookLogin()
+                            try {
+                                String email = object.get("email").toString();
+                                User user = new User(email, "");
+                                user.setFacebookId(id);
+                                String path = smallImage.getPath();
+                                user.setPictureSmall(smallImage.getPath());
+                                user.setPictureLarge(largeImage.getPath());
+                                user.setName(name);
+                                user.setRegistrar("facebook");
+                                userApi.facebookLogin(user).enqueue(new Callback<User>() {
+                                    @Override
+                                    public void onResponse(Call<User> call, Response<User> response) {
+                                        if (response.body() != null) {
+                                            String token = response.body().message;
+                                            TokenIO.saveToken(token);
+                                            listener.onSuccess();
+                                        } else {
+                                            listener.onError("Wrong credentials");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<User> call, Throwable t) {
+                                        t.printStackTrace();
+                                        listener.onError("Fatal error");
+                                    }
+                                });
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     Bundle parameters = new Bundle();

@@ -49,7 +49,7 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     }
 
     @Bind(R.id.recyclerSessions)
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     @Bind(R.id.swipeSession)
     SwipeRefreshLayout swipeRefreshLayout;
