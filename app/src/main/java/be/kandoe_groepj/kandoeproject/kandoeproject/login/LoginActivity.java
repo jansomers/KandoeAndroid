@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
+        AccessToken.refreshCurrentAccessTokenAsync();
         String token = TokenIO.loadToken();
         if (token.equals("")) {
 
