@@ -1,7 +1,5 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +21,7 @@ public class Session implements Serializable {
     private boolean isPreGame;
     private Map<String, Object> additionalProperties = new HashMap<>();
     private String currentPlayerId;
+    private boolean isStopped;
 
     public String getId() {
         return id;
@@ -142,5 +141,13 @@ public class Session implements Serializable {
 
     public void setCurrentPlayerId(String currentPlayerId) {
         this.currentPlayerId = currentPlayerId;
+    }
+
+    public boolean isStopped() {
+        return isStopped;
+    }
+
+    public void setIsStopped(boolean isStopped) {
+        this.isStopped = isStopped;
     }
 }
