@@ -49,7 +49,9 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     }
 
     public void addAll(List<Session> sessions){
-        data.addAll(sessions);
+        for (Session session: sessions) {
+            if (!session.isStopped()) add(session);
+        }
         notifyDataSetChanged();
     }
 
