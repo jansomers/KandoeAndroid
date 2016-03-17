@@ -1,7 +1,6 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
 
 import android.content.SharedPreferences;
-import android.media.session.MediaSession;
 import android.util.Base64;
 
 import org.json.JSONException;

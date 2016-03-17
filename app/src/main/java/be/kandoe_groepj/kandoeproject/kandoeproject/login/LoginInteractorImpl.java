@@ -2,6 +2,7 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.login;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -46,7 +47,10 @@ public class LoginInteractorImpl implements LoginInteractor {
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.body() != null) {
                             String token = response.body().message;
+                            Log.d("test", "token on loginImp: " + token);
                             TokenIO.saveToken(token);
+                            Log.d("test", "tokon on loginImp, save check: " + token);
+                            Log.d("test", "token after save Check= " + TokenIO.loadToken());
                             listener.onSuccess();
                         } else {
                             listener.onError("Wrong credentials");

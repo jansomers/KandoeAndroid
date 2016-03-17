@@ -1,6 +1,10 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,21 +17,33 @@ import java.util.Collections;
 import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.R;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApi;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApiFactory;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 
 /**
  * Created by Jan on 7/03/2016.
  */
-public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionViewHolder> {
+public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionViewHolder> implements OnFinishListener {
 
     private LayoutInflater inflater;
     List<Session> data = Collections.emptyList();
+    List<User> usersInCurrent = Collections.emptyList();
     Context context;
+    private final String YOUR_TURN = "Jouw Beurt";
+    UserApi userApi;
 
     public SessionAdapter(Context context, List<Session> data) {
         inflater =LayoutInflater.from(context);
         this.data = data;
         this.context =context;
+        userApi = UserApiFactory.getApi();
     }
 
     public void add(Session session){
@@ -64,14 +80,43 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     @Override
     public void onBindViewHolder(SessionViewHolder holder, int position) {
         Session current = data.get(position);
+        getUsersInCurrent(current);
+        String currentUsername = getCurrentUserName(current.getCurrentPlayerId());
         holder.sessionTitle.setText(current.getName());
-        if (position == 1) {
-            holder.userTurn.setTextColor(context.getResources().getColor(R.color.colorAccent));
-            holder.userTurn.setTypeface(null, Typeface.BOLD);
+        if(current.getCurrentPlayerId().equals(TokenIO.getUserId())) {
+            holder.userTurn.setText(YOUR_TURN);
             holder.statusImg.setImageResource(R.drawable.ic_notifications_on_24dp);
-            holder.statusImg.setColorFilter(context.getResources().getColor(R.color.colorAccent));
+            holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.colorAccent)));
+        } else {
+            holder.userTurn.setText(currentUsername);
+            holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryLight)));
+            holder.statusImg.setImageResource(R.drawable.ic_games_48px);
         }
 
+    }
+
+    private String getCurrentUserName(String currentPlayerId) {
+        for (User user : usersInCurrent) {
+            if (currentPlayerId.equals(user.getId()))return user.getName();
+        }
+        return "No User";
+    }
+
+    private void getUsersInCurrent(Session current) {
+
+        userApi.getSessionUsers(current.getUserIds()).enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                usersInCurrent = response.body();
+                finished();
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("Test", "Failed to get users in current session" + t.getMessage());
+                finished();
+            }
+        });
     }
 
     @Override
@@ -79,6 +124,14 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
         return data.size();
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public void finished() {
+
+    }
+
+>>>>>>> origin/master
     class SessionViewHolder extends RecyclerView.ViewHolder {
         TextView sessionTitle;
         ImageView statusImg;

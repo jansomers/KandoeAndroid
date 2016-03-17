@@ -14,7 +14,6 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.view.SessionActivity;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -37,7 +36,7 @@ public class SessionTest {
         intent.putExtra("isTest", true);
         final SessionActivity activity = main.launchActivity(intent);
         //final RecyclerView recyclerView = activity.getRecyclerView();
-        TokenIO.saveToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfdHlwZSI6IndlYiIsIl9uYW1lIjoiUm9iSGVuZHJpY2t4IiwiX2VtYWlsIjoicm9iLmhlbmRyaWNreEBzdHVkZW50LmtkZy5iZSIsIl9pZCI6IjU2ZTAzNzhmOTljNDM2YzdiYjRkNmEwYyJ9.d51772e45d44a99454040bd508f5bfc8d4ff25194a81e94891d47cbd51d0600f");
+        //TokenIO.saveToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfdHlwZSI6IndlYiIsIl9uYW1lIjoiUm9iSGVuZHJpY2t4IiwiX2VtYWlsIjoicm9iLmhlbmRyaWNreEBzdHVkZW50LmtkZy5iZSIsIl9pZCI6IjU2ZTAzNzhmOTljNDM2YzdiYjRkNmEwYyJ9.d51772e45d44a99454040bd508f5bfc8d4ff25194a81e94891d47cbd51d0600f");
         final List<Session> data = activity.getAdapter().getData();
         main.getActivity().prepareData(new OnFinishListener() {
             @Override

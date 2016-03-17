@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,8 +31,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
+        TokenIO.initSharedPreferences(getSharedPreferences("Test",Context.MODE_PRIVATE));
         String token = TokenIO.loadToken();
+        Log.d("test", "TOKEN LOGIN START: " + token);
         if (token.equals("")) {
 
         } else {
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void navigateToHome() {
         String token = TokenIO.loadToken();
+        Log.d("test", "token in navigateToHome" + token);
         startActivity(new Intent(this, SessionActivity.class));
 
         finish();

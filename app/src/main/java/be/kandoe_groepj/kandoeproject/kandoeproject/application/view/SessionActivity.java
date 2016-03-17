@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -61,9 +62,11 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     SessionAdapter adapter;
     SessionApi sessionApi;
 
+    String token;
+
 
     public void initSharedPref() {
-        TokenIO.initSharedPreferences(getPreferences(Context.MODE_PRIVATE));
+        TokenIO.initSharedPreferences(getSharedPreferences("Test", Context.MODE_PRIVATE));
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         ButterKnife.bind(this);
         //Toolbar settings
         configToolbar();
+        token = TokenIO.loadToken();
+        Log.d("test", "Loaded token in SessionActivity: " + token);
 
         adapter = new SessionAdapter(this,new ArrayList<Session>());
         prepareRetrofit();
@@ -107,10 +112,14 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     }
 
     public void prepareData(final OnFinishListener callback) {
-        sessionApi.getUserSessions(TokenIO.loadToken()).enqueue(new Callback<List<Session>>() {
+        sessionApi.getUserSessions(token).enqueue(new Callback<List<Session>>() {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
+                Log.d("test","BODY SIZE: " + response.body().size());
+                Log.d("test", "Token: " + TokenIO.loadToken());
+                Log.d("test", "Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfdHlwZSI6IndlYiIsIl9uYW1lIjoiUm9iSGVuZHJpY2t4IiwiX2VtYWlsIjoicm9iLmhlbmRyaWNreEBzdHVkZW50LmtkZy5iZSIsIl9pZCI6IjU2ZTAzNzhmOTljNDM2YzdiYjRkNmEwYyJ9.d51772e45d44a99454040bd508f5bfc8d4ff25194a81e94891d47cbd51d0600f");
                 adapter.addAll(response.body());
+                Log.d("test", "ADAPTER SIZE: " + adapter.getData().size());
                 adapter.notifyDataSetChanged();
                 callback.finished();
             }
