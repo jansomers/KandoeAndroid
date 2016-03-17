@@ -66,7 +66,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         Card current = data.get(position);
         Log.d("TEST", ("NAME CURRENT====== " + current.getName()));
         holder.cardName.setText(current.getName());
-        holder.priority.setText(current.getCardPosition());
+      //  holder.priority.setText(current.getCardPosition());
     }
 
     @Override

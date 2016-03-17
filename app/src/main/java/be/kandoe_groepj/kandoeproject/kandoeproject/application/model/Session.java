@@ -1,27 +1,23 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Session implements Serializable {
-    //@SerializedName("_id")
     private String id;
     private String groupId;
     private String[] userIds;
-    private String name;
     private String themeId;
+    private String name;
     private String creatorId;
-    private String startDate; //format: dd/mm/yyyy hh:mm
-    private boolean inProgress;
+    private String startDate;
     private boolean realTime;
+    private boolean isPreGame;
     private int endPoint;
     private boolean allowComment;
-    private int turnTimeMin;
-    private boolean isPreGame;
-    private Map<String, Object> additionalProperties = new HashMap<>();
-    private String currentPlayerId;
+    private boolean inProgress;
     private boolean isStopped;
+    private int turnTimeMin;
+    private String currentPlayerId;
 
     public String getId() {
         return id;
@@ -47,20 +43,20 @@ public class Session implements Serializable {
         this.userIds = userIds;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getThemeId() {
         return themeId;
     }
 
     public void setThemeId(String themeId) {
         this.themeId = themeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCreatorId() {
@@ -79,20 +75,20 @@ public class Session implements Serializable {
         this.startDate = startDate;
     }
 
-    public boolean isInProgress() {
-        return inProgress;
-    }
-
-    public void setInProgress(boolean inProgress) {
-        this.inProgress = inProgress;
-    }
-
     public boolean isRealTime() {
         return realTime;
     }
 
     public void setRealTime(boolean realTime) {
         this.realTime = realTime;
+    }
+
+    public boolean isPreGame() {
+        return isPreGame;
+    }
+
+    public void setIsPreGame(boolean isPreGame) {
+        this.isPreGame = isPreGame;
     }
 
     public int getEndPoint() {
@@ -111,36 +107,12 @@ public class Session implements Serializable {
         this.allowComment = allowComment;
     }
 
-    public int getTurnTimeMin() {
-        return turnTimeMin;
+    public boolean isInProgress() {
+        return inProgress;
     }
 
-    public void setTurnTimeMin(int turnTimeMin) {
-        this.turnTimeMin = turnTimeMin;
-    }
-
-    public Map<String, Object> getAdditionalProperties() {
-        return additionalProperties;
-    }
-
-    public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-        this.additionalProperties = additionalProperties;
-    }
-
-    public boolean isPreGame() {
-        return isPreGame;
-    }
-
-    public void setIsPreGame(boolean isPreGame) {
-        this.isPreGame = isPreGame;
-    }
-
-    public String getCurrentPlayerId() {
-        return currentPlayerId;
-    }
-
-    public void setCurrentPlayerId(String currentPlayerId) {
-        this.currentPlayerId = currentPlayerId;
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
     }
 
     public boolean isStopped() {
@@ -149,5 +121,21 @@ public class Session implements Serializable {
 
     public void setIsStopped(boolean isStopped) {
         this.isStopped = isStopped;
+    }
+
+    public int getTurnTimeMin() {
+        return turnTimeMin;
+    }
+
+    public void setTurnTimeMin(int turnTimeMin) {
+        this.turnTimeMin = turnTimeMin;
+    }
+
+    public String getCurrentPlayerId() {
+        return currentPlayerId;
+    }
+
+    public void setCurrentPlayerId(String currentPlayerId) {
+        this.currentPlayerId = currentPlayerId;
     }
 }

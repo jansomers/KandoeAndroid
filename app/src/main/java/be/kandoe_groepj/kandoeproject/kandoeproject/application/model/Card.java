@@ -1,10 +1,11 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
     private String id;
     private String name;
     private String themeId;
-    private String cardPosition = "0";
 
     public String getId() {
         return id;
@@ -28,13 +29,5 @@ public class Card {
 
     public void setThemeId(String themeId) {
         this.themeId = themeId;
-    }
-
-    public String getCardPosition() {
-        return cardPosition;
-    }
-
-    public void setCardPosition(String cardPosition) {
-        this.cardPosition = cardPosition;
     }
 }

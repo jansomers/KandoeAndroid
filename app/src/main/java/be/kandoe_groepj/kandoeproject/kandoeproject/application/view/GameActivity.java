@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardAdapter;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardItemClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TypescriptTypeAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -51,8 +54,7 @@ public class GameActivity extends AppCompatActivity {
     CardAdapter adapter;
     CardApi cardApi;
     PositionCircleView positionCircleView;
-    //private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
-    private final String BASE_URL ="http://10.0.2.2:8080/api/" ;
+    private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
     private int circleLayoutMargin = 5*2;
     private int circleParamWidth = 120;
     private int circleParamHeight = 120;
@@ -174,11 +176,10 @@ public class GameActivity extends AppCompatActivity {
     private void prepareRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(
+                        GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(Card.class, new TypescriptTypeAdapter<>(Card.class)).create()))
                 .build();
 
         cardApi = retrofit.create(CardApi.class);
     }
-
-
 }

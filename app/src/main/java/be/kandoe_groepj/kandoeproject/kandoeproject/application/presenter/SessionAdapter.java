@@ -5,8 +5,6 @@ import android.content.res.ColorStateList;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,6 @@ import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 
 /**
  * Created by Jan on 7/03/2016.
@@ -103,8 +100,13 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     }
 
     private void getUsersInCurrent(Session current) {
+        String[] userIds = current.getUserIds();
+        String output = "[";
+        for (int i = 0; i < userIds.length; i++)
+            output += "\"" + userIds[i] + "\"" + (i != userIds.length - 1 ? "," : "]");
+        System.out.println("JASPER: " + output);
 
-        userApi.getSessionUsers(current.getUserIds()).enqueue(new Callback<List<User>>() {
+        userApi.getSessionUsers(output).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 usersInCurrent = response.body();
@@ -124,14 +126,11 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
         return data.size();
     }
 
-<<<<<<< HEAD
-=======
     @Override
     public void finished() {
 
     }
 
->>>>>>> origin/master
     class SessionViewHolder extends RecyclerView.ViewHolder {
         TextView sessionTitle;
         ImageView statusImg;

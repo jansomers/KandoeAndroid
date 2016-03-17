@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.login;
+package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -24,8 +24,10 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
         for (Field field : clazz.getDeclaredFields()) {
             try {
                 field.setAccessible(true);
-                if (field.get(value) != null)
+                if (field.get(value) != null) {
+
                     out.name("_" + field.getName()).value(field.get(value).toString());
+                }
                     //out.name(field.getName()).value(field.get(value).toString());
 
 
@@ -85,6 +87,11 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                     field.set(o, nextBool);
                 } else if (type.name().equals("NULL")) {
                     in.nextNull();
+                } else if (type.name().equals("NUMBER")) {
+                    int nextInt = in.nextInt();
+                    Field field = clazz.getDeclaredField(nextName.replace("_", ""));
+                    field.setAccessible(true);
+                    field.set(o, nextInt);
                 }
             }
             in.endObject();

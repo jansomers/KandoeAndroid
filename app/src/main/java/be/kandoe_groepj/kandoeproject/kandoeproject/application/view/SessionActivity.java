@@ -25,7 +25,7 @@ import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.Sessio
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionItemClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
-import be.kandoe_groepj.kandoeproject.kandoeproject.login.TypescriptTypeAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TypescriptTypeAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -90,7 +90,7 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
                 Toast.makeText(SessionActivity.this, "onClick"+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SessionActivity.this, GameActivity.class);
                 Session session = adapter.getOne(position);
-                intent.putExtra("Session",session);
+                intent.putExtra("Session", session);
                 SessionActivity.this.startActivity(intent);
             }
 

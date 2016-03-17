@@ -2,7 +2,6 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.application.api;
 
 import java.util.List;
 
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.SimpleResult;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,5 +21,5 @@ public interface UserApi {
     Call<User> facebookLogin(@Body User user);
 
     @GET("user/bulk/{array}")
-    Call<List<User>> getSessionUsers(@Path("array") String [] userIds);
+    Call<List<User>> getSessionUsers(@Path("array") String userIds);
 }
