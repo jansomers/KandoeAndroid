@@ -1,5 +1,7 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
 
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -20,10 +22,11 @@ public class RetrofitServiceGenerator {
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
-                    .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
+                    .baseUrl(API_BASE_URL);
+
 
     public static <S> S createService(Class<S> serviceClass) {
+        builder.addConverterFactory(GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(serviceClass, new TypescriptTypeAdapter<>(serviceClass)).create()));
         return createService(serviceClass, null);
     }
 

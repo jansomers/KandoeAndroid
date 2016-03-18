@@ -31,4 +31,8 @@
     </string>
     <string name="facebook_app_id">1042721982454370</string>
     <string name="RoundedFont" />
+    <string name="registreer">Registreer</string>
+    <string name="login">Inloggen</string>
+    <string name="loginwithfb">Aanmelden met Facebook</string>
+    <string name="title_activity_pre_game">PreGameActivity</string>
 </resources>

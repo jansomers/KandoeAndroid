@@ -1,7 +1,6 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class CardPosition implements Serializable {
 
@@ -11,7 +10,7 @@ public class CardPosition implements Serializable {
     private String userId;
     private String[] userHistory;
     private int position;
-    private Date lastChanged;
+    private String lastChanged;
 
     public String getId() {
         return id;
@@ -61,11 +60,11 @@ public class CardPosition implements Serializable {
         this.position = position;
     }
 
-    public Date getLastChanged() {
+    public String getLastChanged() {
         return lastChanged;
     }
 
-    public void setLastChanged(Date lastChanged) {
+    public void setLastChanged(String lastChanged) {
         this.lastChanged = lastChanged;
     }
 }

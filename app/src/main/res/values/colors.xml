@@ -13,4 +13,5 @@
     <color name="transparantWhite40">#CCFFFFFF</color>
     <color name="whiteSmoke">#F9F9F9</color>
     <color name="controlNormal">#c5c5c5</color>
+    <color name="facebookDark">#3b5998</color>
 </resources>

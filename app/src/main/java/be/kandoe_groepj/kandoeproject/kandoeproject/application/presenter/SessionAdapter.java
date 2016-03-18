@@ -72,7 +72,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
     }
     @Override
     public SessionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.session_item, parent,false);
+        View view = inflater.inflate(R.layout.session_item, parent, false);
         return new SessionViewHolder(view);
     }
 
@@ -82,16 +82,32 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
         getUsersInCurrent(current);
         String currentUsername = getCurrentUserName(current.getCurrentPlayerId());
         holder.sessionTitle.setText(current.getName());
-        if(current.getCurrentPlayerId().equals(TokenIO.getUserId())) {
-            holder.userTurn.setText(YOUR_TURN);
-            holder.statusImg.setImageResource(R.drawable.ic_notifications_on_24dp);
-            holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context,R.color.colorAccent)));
-        } else {
-            holder.userTurn.setText(currentUsername);
-            holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryLight)));
-            holder.statusImg.setImageResource(R.drawable.ic_games_48px);
+        if (current.isInProgress() && !current.isPreGame()) {
+            if (current.getCurrentPlayerId().equals(TokenIO.getUserId())) {
+                holder.userTurn.setText(YOUR_TURN);
+                holder.statusImg.setImageResource(R.drawable.ic_notifications_on_24dp);
+                holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorAccent)));
+            } else {
+                holder.userTurn.setText("Other's turn");
+                holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryLight)));
+                holder.statusImg.setImageResource(R.drawable.ic_games_48px);
+            }
         }
-
+        else {
+            if (current.isPreGame() && !current.isStopped()) {
+                if (current.getCurrentPlayerId().equals(TokenIO.getUserId())) {
+                    holder.userTurn.setText(YOUR_TURN);
+                    holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorAccent)));
+                    holder.statusImg.setImageResource(R.drawable.ic_event_available_24dp);
+                }
+                else {
+                    holder.userTurn.setText("Other's turn");
+                    holder.userTurn.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryLight)));
+                    holder.statusImg.setImageResource(R.drawable.ic_event_available_24dp);
+                    holder.statusImg.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryLight)));
+                }
+            }
+        }
     }
 
     private String getCurrentUserName(String currentPlayerId) {

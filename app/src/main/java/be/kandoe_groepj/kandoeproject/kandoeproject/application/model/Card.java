@@ -3,6 +3,7 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.application.model;
 import java.io.Serializable;
 
 public class Card implements Serializable {
+
     private String id;
     private String name;
     private String themeId;

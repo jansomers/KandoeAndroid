@@ -41,14 +41,6 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
-    public void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
-    }
-
     @Bind(R.id.recyclerSessions)
     RecyclerView recyclerView;
 
@@ -87,11 +79,21 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         recyclerView.addOnItemTouchListener(new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(SessionActivity.this, "onClick"+position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SessionActivity.this, GameActivity.class);
                 Session session = adapter.getOne(position);
-                intent.putExtra("Session", session);
-                SessionActivity.this.startActivity(intent);
+                if (!session.isStopped() && !session.isPreGame() && session.isInProgress()) {
+                    Intent gameintent = new Intent(SessionActivity.this, GameActivity.class);
+                    gameintent.putExtra("Session", session);
+                    SessionActivity.this.startActivity(gameintent);
+                }
+                else if (!session.isStopped() && session.isPreGame() && session.isInProgress()) {
+                    Intent pregameintent = new Intent(SessionActivity.this, PreGameActivity.class);
+                    pregameintent.putExtra("Session", session);
+                    SessionActivity.this.startActivity(pregameintent);
+                }
+                else if (!session.isStopped() && !session.isInProgress() && !session.isPreGame()) {
+                    Toast.makeText(SessionActivity.this, "Sessie is niet up to date. Refresh of kies een andere", Toast.LENGTH_LONG);
+                }
+
             }
 
             @Override

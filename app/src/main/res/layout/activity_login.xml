@@ -85,36 +85,28 @@
         android:layout_weight="0.1">
 
         <Button
-            android:shadowRadius="10"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Log in"
+            android:text="@string/login"
             android:id="@+id/bLoginActivityLogin"
             android:textSize="20sp"
             android:textAllCaps="false"
             android:height="30dp"
             android:textColor="#ffffff"
-            android:background="@drawable/login_buttons"
-            android:layout_weight="0.4"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="25dp" />
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_weight="0.4" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Register"
+            android:text="@string/registreer"
             android:id="@+id/bLoginActivityRegister"
             android:textSize="20sp"
             android:textAllCaps="false"
             android:height="40dp"
             android:textColor="#ffffff"
-            android:background="@drawable/login_buttons"
-            android:layout_weight="0.4"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp" />
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_weight="0.4" />
 
     </LinearLayout>
 
@@ -122,15 +114,12 @@
         android:shadowRadius="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log in met Facebook"
+        android:text="@string/loginwithfb"
         android:id="@+id/bLoginActivityFacebook"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:textColor="#ffffff"
-        android:background="@drawable/facebook_button"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_weight="0.1"
-        android:layout_marginBottom="50dp"/>
+        android:backgroundTint="@color/facebookDark"
+        android:layout_weight="0.1" />
 
 </LinearLayout>

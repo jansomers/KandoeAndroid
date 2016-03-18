@@ -19,7 +19,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".kandoeproject.application.view.SessionActivity"></activity>
+        <activity android:name=".kandoeproject.application.view.SessionActivity" />
         <activity android:name=".kandoeproject.application.view.GameActivity" />
         <activity android:name=".kandoeproject.login.LoginActivity">
             <intent-filter>
@@ -28,7 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".kandoeproject.gameOverview.GameOverviewActivity"></activity>
+        <activity android:name=".kandoeproject.gameOverview.GameOverviewActivity" />
+        <activity
+            android:name=".kandoeproject.application.view.PreGameActivity"
+            android:label="@string/title_activity_pre_game"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
