@@ -36,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SessionActivity extends AppCompatActivity implements OnFinishListener {
 
+    private final String TITEL = "Sessie Overzicht";
     private final String BASE_URL = "http://10.0.3.2:8080/api/";
 
     @Bind(R.id.toolbar)
@@ -65,6 +66,7 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         super.onCreate(savedInstanceState);
         initSharedPref();
         setContentView(R.layout.activity_session);
+        setTitle(TITEL);
         ButterKnife.bind(this);
         //Toolbar settings
         configToolbar();

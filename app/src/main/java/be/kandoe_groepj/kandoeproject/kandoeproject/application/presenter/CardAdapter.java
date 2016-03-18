@@ -57,7 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.session_card_item, parent, false);
+        View view = inflater.inflate(R.layout.theme_card_item, parent, false);
         return new CardViewHolder(view);
     }
 
@@ -89,12 +89,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
 
     class CardViewHolder extends RecyclerView.ViewHolder {
         TextView cardName;
-        TextView priority;
 
         public CardViewHolder(View itemView) {
             super(itemView);
             cardName = (TextView) itemView.findViewById(R.id.cardName);
-            priority = (TextView) itemView.findViewById(R.id.priority);
         }
     }
 }
