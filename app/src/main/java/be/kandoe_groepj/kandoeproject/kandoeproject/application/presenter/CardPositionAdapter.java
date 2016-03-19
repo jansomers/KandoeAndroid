@@ -57,6 +57,15 @@ public class CardPositionAdapter extends RecyclerView.Adapter<CardPositionAdapte
         return matchingCard;
     }
 
+    public void unselectAll() {
+        if (viewSelected != null) {
+            viewSelected.setSelected(false);
+            viewSelected = null;
+        }
+        cardPositionSelected = null;
+        notifyDataSetChanged();
+    }
+
     public void selectItem(View view, int position) {
         if (viewSelected != null) viewSelected.setSelected(false);
         viewSelected = view;
@@ -87,6 +96,11 @@ public class CardPositionAdapter extends RecyclerView.Adapter<CardPositionAdapte
     public int getSelectedCardPosition() {
         return cardPositionSelected.getPosition();
     }
+
+    public String getSelectedCardId() {
+        return cardPositionSelected.getCardId();
+    }
+
     public void removeAllCards() {
         cards.removeAll(cards);
     }
@@ -105,6 +119,26 @@ public class CardPositionAdapter extends RecyclerView.Adapter<CardPositionAdapte
 
     private void removeAllCardPositions() {
         cardPositions.removeAll(cardPositions);
+    }
+
+    public void incrementScore(String cardId) {
+        for (CardPosition cardPosition : cardPositions) {
+            if (cardPosition.getCardId().equals(cardId)) {
+                cardPosition.setPosition(cardPosition.getPosition() + 1);
+                notifyDataSetChanged();
+            }
+        }
+    }
+
+    public String getCardPosition(String cardId) {
+        for (CardPosition cardPosition : cardPositions) {
+            if (cardPosition.getCardId().equals(cardId)) {
+                System.out.println("JASPER HELLO: " + cardPosition.getPosition());
+                return String.valueOf(cardPosition.getPosition());
+            }
+        }
+        System.out.println("JASPER HELLO NOT FOUND :'(");
+        return "";
     }
 
     public

@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_toStartOf="@+id/makeMoveFab"
+                android:layout_toStartOf="@+id/bPlayCard"
                 android:layout_margin="10dp"
                 android:elevation="3dp"
                 android:background="@android:color/white">
@@ -50,13 +50,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:foregroundGravity="center"
-                android:layout_toStartOf="@+id/makeMoveFab"
+                android:layout_toStartOf="@+id/bPlayCard"
                 >
             </android.support.v7.widget.RecyclerView>
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/makeMoveFab"
+                android:id="@+id/bPlayCard"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"

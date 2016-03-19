@@ -24,13 +24,8 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
         for (Field field : clazz.getDeclaredFields()) {
             try {
                 field.setAccessible(true);
-                if (field.get(value) != null) {
-
+                if (field.get(value) != null)
                     out.name("_" + field.getName()).value(field.get(value).toString());
-                }
-                    //out.name(field.getName()).value(field.get(value).toString());
-
-
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -92,6 +87,25 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                     Field field = clazz.getDeclaredField(nextName.replace("_", ""));
                     field.setAccessible(true);
                     field.set(o, nextInt);
+                } else if (type.name().equals("BEGIN_OBJECT")) {
+                    in.beginObject();
+                    while (in.hasNext()) {
+                        in.nextName();
+                        JsonToken innerType = in.peek();
+                        switch (innerType.name()) {
+                            case "STRING":
+                                in.nextString();break;
+                            case "NUMBER":
+                                in.nextInt(); break;
+                            case "BEGIN_ARRAY":
+                                in.beginArray(); while (in.hasNext()) { JsonToken type2 = in.peek(); if (type2.name().equals("STRING")) in.nextString();} in.endArray();break;
+                        }
+                    }
+                    in.endObject();
+                } else {
+                    String name = type.name();
+                    System.out.println("omg wtf? " + type.name());
+                    System.out.println("ok");
                 }
             }
             in.endObject();

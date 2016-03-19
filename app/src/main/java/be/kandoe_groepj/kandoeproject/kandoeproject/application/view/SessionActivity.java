@@ -61,6 +61,44 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         TokenIO.initSharedPreferences(getSharedPreferences("Test", Context.MODE_PRIVATE));
     }
 
+    RecyclerView.OnItemTouchListener onItemTouchListener;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        adapter = new SessionAdapter(this,new ArrayList<Session>());
+        prepareRetrofit();
+        if (!getIntent().getBooleanExtra("isTest", false)) prepareData(this);
+        recyclerView.setAdapter(adapter);
+
+        if (onItemTouchListener != null)
+            recyclerView.removeOnItemTouchListener(onItemTouchListener);
+        onItemTouchListener = new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Session session = adapter.getOne(position);
+                if (!session.isStopped() && !session.isPreGame() && session.isInProgress()) {
+                    Intent gameintent = new Intent(SessionActivity.this, GameActivity.class);
+                    gameintent.putExtra("Session", session);
+                    SessionActivity.this.startActivity(gameintent);
+                } else if (!session.isStopped() && session.isPreGame() && session.isInProgress()) {
+                    Intent pregameintent = new Intent(SessionActivity.this, PreGameActivity.class);
+                    pregameintent.putExtra("Session", session);
+                    SessionActivity.this.startActivity(pregameintent);
+                } else if (!session.isStopped() && !session.isPreGame()) {
+                    Toast.makeText(SessionActivity.this, "Sessie is niet up to date. Refresh of kies een andere", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(SessionActivity.this, "onLongClick" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.addOnItemTouchListener(onItemTouchListener);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initSharedPref();
@@ -71,38 +109,7 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         token = TokenIO.loadToken();
         Log.d("test", "Loaded token in SessionActivity: " + token);
 
-        adapter = new SessionAdapter(this,new ArrayList<Session>());
-        prepareRetrofit();
-        if (!getIntent().getBooleanExtra("isTest", false)) prepareData(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        recyclerView.addOnItemTouchListener(new SessionItemClickListener(this, recyclerView, new SessionClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Session session = adapter.getOne(position);
-                if (!session.isStopped() && !session.isPreGame() && session.isInProgress()) {
-                    Intent gameintent = new Intent(SessionActivity.this, GameActivity.class);
-                    gameintent.putExtra("Session", session);
-                    SessionActivity.this.startActivity(gameintent);
-                }
-                else if (!session.isStopped() && session.isPreGame() && session.isInProgress()) {
-                    Intent pregameintent = new Intent(SessionActivity.this, PreGameActivity.class);
-                    pregameintent.putExtra("Session", session);
-                    SessionActivity.this.startActivity(pregameintent);
-                }
-                else if (!session.isStopped() && !session.isInProgress() && !session.isPreGame()) {
-                    Toast.makeText(SessionActivity.this, "Sessie is niet up to date. Refresh of kies een andere", Toast.LENGTH_LONG);
-                }
-
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(SessionActivity.this, "onLongClick"+position, Toast.LENGTH_SHORT).show();
-
-
-            }
-        }));
+        recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -112,6 +119,8 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
 
 
     }
+
+
 
     public void prepareData(final OnFinishListener callback) {
         sessionApi.getUserSessions(token).enqueue(new Callback<List<Session>>() {

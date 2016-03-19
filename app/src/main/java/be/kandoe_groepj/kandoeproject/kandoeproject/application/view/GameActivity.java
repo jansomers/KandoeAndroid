@@ -19,6 +19,7 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.CardApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.CardPositionApi;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Card;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.CardPosition;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
@@ -26,6 +27,8 @@ import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardCl
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardItemClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.CardPositionAdapter;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.SocketIOWrapper;
+import be.kandoe_groepj.kandoeproject.kandoeproject.helper.SocketListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
 import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TypescriptTypeAdapter;
 import butterknife.Bind;
@@ -36,12 +39,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class GameActivity extends AppCompatActivity implements OnFinishListener {
+public class GameActivity extends AppCompatActivity implements OnFinishListener, SocketListener {
 
+    private SocketIOWrapper socketIOWrapper;
+
+    //region View binding
     @Bind(R.id.recyclerCards)
     RecyclerView recyclerView;
 
-    @Bind(R.id.makeMoveFab)
+    @Bind(R.id.bPlayCard)
     android.support.v7.widget.AppCompatImageButton makeMoveButton;
 
     @Bind(R.id.circleBoardRelLay)
@@ -52,28 +58,21 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
 
     @Bind(R.id.sessionName)
     TextView sessionName;
+    //endregion
 
-
-    ImageView prior1;
-    ImageView prior2;
-    ImageView prior3;
-    ImageView prior4;
-    ImageView prior5;
-
-    //CardAdapter adapter;
-    CardPositionAdapter adapter;
-    CardApi cardApi;
-    CardPositionApi cardPositionApi;
+    private ImageView[] priors;
+    private CardPositionAdapter adapter;
+    private CardApi cardApi;
+    private CardPositionApi cardPositionApi;
+    private SessionApi sessionApi;
     private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
-    private int circleLayoutMargin = 5*2;
-    private int circleParamWidth = 120;
-    private int circleParamHeight = 120;
-    Session session;
-
+    private Session session;
+    private String selectedCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        priors = new ImageView[5];
         initSharedPref();
         setContentView(R.layout.game_board);
         ButterKnife.bind(this);
@@ -85,10 +84,49 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
         prepareCards(this);
         prepareCardPositions(this);
         prepareAdapter();
+        prepareSessionApiRetrofit();
+        prepareMakeMoveButton();
+        if (!isMyTurn()) hideMakeMoveButton();
+        socketIOWrapper = new SocketIOWrapper(this, session.getId());
+    }
 
+    private void playCard(final String cardId) {
+        final CardPosition cardPosition = new CardPosition();
+        cardPosition.setCardId(cardId);
+        sessionApi.playCard(session.getId(), TokenIO.loadToken(), cardPosition).enqueue(new Callback<CardPosition>() {
+            @Override
+            public void onResponse(Call<CardPosition> call, Response<CardPosition> response) {
+                System.out.println("JASPER NIGGER: " + session.getCurrentPlayerId() + " - " + response.body().getCurrentPlayerId());
+                session.setCurrentPlayerId(response.body().getCurrentPlayerId());
+                System.out.println("JASPER I DID MOVE!");
+                socketIOWrapper.sendMoveCard(cardId, session.getCurrentPlayerId(), Integer.parseInt(adapter.getCardPosition(cardId)) + 1);
+            }
 
+            @Override
+            public void onFailure(Call<CardPosition> call, Throwable t) {
+                System.out.println("jasper not ok");
+                t.printStackTrace();
+            }
+        });
+    }
 
+    private void prepareMakeMoveButton() {
+        makeMoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!selectedCardId.isEmpty()) {
+                    playCard(selectedCardId);
+                }
+            }
+        });
+    }
 
+    private void hideMakeMoveButton() {
+        makeMoveButton.setVisibility(View.INVISIBLE);
+    }
+
+    private void showMakeMoveButton() {
+        makeMoveButton.setVisibility(View.VISIBLE);
     }
 
     private void prepareTitle() {
@@ -101,6 +139,7 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
     }
 
     private void prepareAdapter() {
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new MyScrollingLinearLayoutManager(this));
         recyclerView.addOnItemTouchListener(new CardItemClickListener(this, recyclerView, new CardClickListener() {
@@ -110,13 +149,15 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
                 recyclerView.smoothScrollToPosition(position);
                 if (adapter.hasSelectedItem()) {
                     makeMoveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorAccent)));
-                    makeMoveButton.setClickable(true);
+                    selectedCardId = adapter.getSelectedCardId();
+                    if (isMyTurn()) {
+                        showMakeMoveButton();
+                        makeMoveButton.setClickable(true);
+                    }
                     /*prior1.setImageResource(R.mipmap.ic_circle2pos);*/
-
 
                 }
                 showHighlight(adapter.getSelectedCardPosition());
-
             }
 
             @Override
@@ -125,113 +166,38 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
         }));
     }
 
-    private void showHighlight(int selectedCardPosition) {
+    private boolean isMyTurn() {
+        return session.getCurrentPlayerId().equals(TokenIO.getUserId());
+    }
 
-        switch (selectedCardPosition) {
-            case (0): prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-                break;
-            case (1): prior1.setImageResource(R.mipmap.ic_red_circle);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-                break;
-            case (2): prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_red_circle);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-                break;
-            case (3): prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_red_circle);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-                break;
-            case (4): prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_red_circle);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-                break;
-            case (5): prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_red_circle);
-                break;
-            default: prior1.setImageResource(R.mipmap.ic_circle2pos);
-                prior2.setImageResource(R.mipmap.ic_circle2pos);
-                prior3.setImageResource(R.mipmap.ic_circle2pos);
-                prior4.setImageResource(R.mipmap.ic_circle2pos);
-                prior5.setImageResource(R.mipmap.ic_circle2pos);
-        }
+    private void showHighlight(int selectedCardPosition) {
+        for (int i = 0; i < 5; i++)
+            priors[i].setImageResource(selectedCardPosition == (i + 1) ? R.mipmap.ic_red_circle : R.mipmap.ic_circle2pos);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
        super.onWindowFocusChanged(hasFocus);
         prepareViews();
-
-
     }
 
     private void prepareViews() {
-
-
-        //Priority 1
-        prior1 = new ImageView(this);
-        prior1.setImageResource(R.mipmap.ic_red_circle);
-        prior1.setId(R.id.prior1);
-        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(circleParamWidth - 15, circleParamHeight-15);
-        int centerXofLayoutMin = playCircle.getWidth()/2;
-        int centerYofLayoutMin = playCircle.getHeight()/2;
-        params2.leftMargin = centerXofLayoutMin - (circleParamWidth-15)/2 - 365;
-        params2.topMargin = centerYofLayoutMin - (circleParamHeight-15)/2 - 365;
-        circleLayout.addView(prior1, params2);
-
-        //Priority 2
-        prior2 = new ImageView(this);
-        prior2.setImageResource(R.mipmap.ic_red_circle);
-        prior2.setId(R.id.prior2);
-        RelativeLayout.LayoutParams para = new RelativeLayout.LayoutParams(circleParamWidth-5,circleParamHeight-5);
-        para.leftMargin = centerXofLayoutMin - circleParamWidth/2 - 285;
-        para.topMargin = centerYofLayoutMin - circleParamHeight/2 - 285;
-        circleLayout.addView(prior2, para);
-
-        //Priority 3
-        prior3 = new ImageView(this);
-        prior3.setImageResource(R.mipmap.ic_red_circle);
-        prior3.setId(R.id.prior3);
-        RelativeLayout.LayoutParams para4 = new RelativeLayout.LayoutParams(circleParamWidth,circleParamHeight);
-        para4.leftMargin = centerXofLayoutMin - circleParamWidth/2 - 205;
-        para4.topMargin = centerYofLayoutMin - circleParamHeight/2 - 205;
-        circleLayout.addView(prior3, para4);
-
-        //Priority 4
-        prior4 = new ImageView(this);
-        prior4.setImageResource(R.mipmap.ic_red_circle);
-        prior4.setId(R.id.prior4);
-        RelativeLayout.LayoutParams para5 = new RelativeLayout.LayoutParams(circleParamWidth+10,circleParamHeight+10);
-        para5.leftMargin = centerXofLayoutMin - (circleParamWidth)/2 - 125;
-        para5.topMargin = centerYofLayoutMin - (circleParamHeight)/2 - 125;
-        circleLayout.addView(prior4, para5);
-
-        //Priority 5
-        prior5 = new ImageView(this);
-        prior5.setImageResource(R.mipmap.ic_red_circle);
-        prior5.setId(R.id.prior5);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(circleParamWidth +30, circleParamHeight+30);
-        Log.d("Circlelayout", "WIDTH: " + circleLayout.getWidth() + "- LENGTH: " + circleLayout.getHeight());
-        int centerXofLayout = playCircle.getWidth()/2;
-        int centerYofLayout = playCircle.getHeight()/2;
-        params.leftMargin = centerXofLayout - (circleParamWidth +30)/2;
-        params.topMargin = centerYofLayout - (circleParamHeight+30)/2;
-        circleLayout.addView(prior5, params);
+        int[] x = {-15, -5, 0, 10, 30};
+        int[] y = {-365, -285, -205, -125, 0};
+        for (int i = 0; i < 5; i++) {
+            priors[i] = new ImageView(this);
+            priors[i].setImageResource(R.mipmap.ic_red_circle);
+            int id = getResources().getIdentifier("prior" + (i + 1), "id", getPackageName());
+            priors[i].setId(getResources().getIdentifier("prior" + (i + 1), "id", getPackageName()));
+            int circleParamWidth = 120;
+            int circleParamHeight = 120;
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(circleParamWidth + x[i], circleParamHeight + x[i]);
+            int centerXofLayoutMin = playCircle.getWidth() / 2;
+            int centerYofLayoutMin = playCircle.getHeight() / 2;
+            params.leftMargin = centerXofLayoutMin - (circleParamWidth + (i == 0 || i == 4 ? x[i] : 0)) / 2 + y[i];
+            params.topMargin = centerYofLayoutMin - (circleParamHeight + (i == 0 || i == 4 ? x[i] : 0)) / 2 + y[i];
+            circleLayout.addView(priors[i], params);
+        }
     }
 
     private void prepareCardPositions(final OnFinishListener callback) {
@@ -315,8 +281,31 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener 
         cardPositionApi = retrofit.create(CardPositionApi.class);
     }
 
+    private void prepareSessionApiRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(
+                        GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(CardPosition.class, new TypescriptTypeAdapter<>(CardPosition.class)).create()))
+                .build();
+
+        sessionApi = retrofit.create(SessionApi.class);
+    }
+
     @Override
     public void finished() {
 
+    }
+
+    @Override
+    public void notify(final String cardId, String message, final String cardPosition) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter.incrementScore(cardId);
+                adapter.unselectAll();
+                showHighlight(Integer.parseInt(cardPosition));
+                showMakeMoveButton();
+            }
+        });
     }
 }

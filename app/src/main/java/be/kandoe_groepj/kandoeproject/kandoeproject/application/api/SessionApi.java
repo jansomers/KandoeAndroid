@@ -2,11 +2,13 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.application.api;
 
 import java.util.List;
 
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.CardPosition;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface SessionApi {
@@ -20,5 +22,6 @@ public interface SessionApi {
     @GET("user/circlesessions")
     Call<List<Session>> getUserSessions(@Header("Bearer") String bearer);
 
-    //Todo GET SESSIONCARDS
+    @POST("circlesessions/{id}/positions")
+    Call<CardPosition> playCard(@Path("id") String id, @Header("Bearer") String bearer, @Body CardPosition cardPosition);
 }
