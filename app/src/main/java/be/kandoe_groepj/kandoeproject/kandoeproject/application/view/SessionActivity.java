@@ -36,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SessionActivity extends AppCompatActivity implements OnFinishListener {
 
+    private final String TITEL = "Sessie Overzicht";
     private final String BASE_URL = "http://10.0.3.2:8080/api/";
 
     @Bind(R.id.toolbar)
@@ -62,6 +63,16 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     }
 
     RecyclerView.OnItemTouchListener onItemTouchListener;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initSharedPref();
+        setContentView(R.layout.activity_session);
+        setTitle(TITEL);
+        ButterKnife.bind(this);
+        //Toolbar settings
+        configToolbar();
+        token = TokenIO.loadToken();
+        Log.d("test", "Loaded token in SessionActivity: " + token);
 
     @Override
     protected void onResume() {
@@ -89,6 +100,10 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
                 } else if (!session.isStopped() && !session.isPreGame()) {
                     Toast.makeText(SessionActivity.this, "Sessie is niet up to date. Refresh of kies een andere", Toast.LENGTH_LONG).show();
                 }
+                else if (!session.isStopped() && !session.isInProgress() && !session.isPreGame()) {
+                    Toast.makeText(SessionActivity.this, "Sessie is niet up to date. Refresh of kies een andere", Toast.LENGTH_LONG);
+                }
+
             }
 
             @Override
