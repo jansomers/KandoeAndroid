@@ -1,8 +1,11 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.api;
 
+import org.json.JSONArray;
+
 import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.CardPosition;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.CircleSessionMoveResponse;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -24,4 +27,7 @@ public interface SessionApi {
 
     @POST("circlesessions/{id}/positions")
     Call<CardPosition> playCard(@Path("id") String id, @Header("Bearer") String bearer, @Body CardPosition cardPosition);
+
+    @POST("circlesessions/{id}/cards")
+    Call<CircleSessionMoveResponse> initCards(@Path("id") String id, @Header("Bearer") String bearer, @Body JSONArray selectedCards);
 }

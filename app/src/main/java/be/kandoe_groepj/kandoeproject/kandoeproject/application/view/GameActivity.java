@@ -297,7 +297,7 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener,
     }
 
     @Override
-    public void notify(final String cardId, String message, final String cardPosition) {
+    public void notifyMoveCard(final String cardId, String message, final String cardPosition) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -307,5 +307,10 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener,
                 showMakeMoveButton();
             }
         });
+    }
+
+    @Override
+    public void notifyInitCard(boolean isPreGame, String currentPlayerId, String[] cards) {
+
     }
 }

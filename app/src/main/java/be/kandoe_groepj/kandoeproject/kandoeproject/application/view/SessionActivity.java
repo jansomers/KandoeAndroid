@@ -74,6 +74,15 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         token = TokenIO.loadToken();
         Log.d("test", "Loaded token in SessionActivity: " + token);
 
+        recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshSessions();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,29 +122,6 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
         });
         recyclerView.addOnItemTouchListener(onItemTouchListener);
     }
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initSharedPref();
-        setContentView(R.layout.activity_session);
-        ButterKnife.bind(this);
-        //Toolbar settings
-        configToolbar();
-        token = TokenIO.loadToken();
-        Log.d("test", "Loaded token in SessionActivity: " + token);
-
-        recyclerView.setLayoutManager(new MyLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshSessions();
-            }
-        });
-
-
-    }
-
-
 
     public void prepareData(final OnFinishListener callback) {
         sessionApi.getUserSessions(token).enqueue(new Callback<List<Session>>() {

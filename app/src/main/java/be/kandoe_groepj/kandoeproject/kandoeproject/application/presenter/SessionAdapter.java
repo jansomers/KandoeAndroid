@@ -24,9 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Jan on 7/03/2016.
- */
 public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionViewHolder> implements OnFinishListener {
 
     private LayoutInflater inflater;

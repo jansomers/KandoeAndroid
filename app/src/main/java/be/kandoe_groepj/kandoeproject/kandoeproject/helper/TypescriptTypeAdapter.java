@@ -93,12 +93,9 @@ public class TypescriptTypeAdapter<T> extends TypeAdapter<T> {
                         in.nextName();
                         JsonToken innerType = in.peek();
                         switch (innerType.name()) {
-                            case "STRING":
-                                in.nextString();break;
-                            case "NUMBER":
-                                in.nextInt(); break;
-                            case "BEGIN_ARRAY":
-                                in.beginArray(); while (in.hasNext()) { JsonToken type2 = in.peek(); if (type2.name().equals("STRING")) in.nextString();} in.endArray();break;
+                            case "STRING": in.nextString();break;
+                            case "NUMBER": in.nextInt(); break;
+                            case "BEGIN_ARRAY": in.beginArray(); while (in.hasNext()) { JsonToken type2 = in.peek(); if (type2.name().equals("STRING")) in.nextString();} in.endArray();break;
                         }
                     }
                     in.endObject();

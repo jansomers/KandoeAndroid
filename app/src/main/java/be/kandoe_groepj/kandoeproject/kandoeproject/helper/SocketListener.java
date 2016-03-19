@@ -2,5 +2,6 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
 
 public interface SocketListener {
 
-    void notify(String cardId, String message, String cardPosition);
+    void notifyMoveCard(String cardId, String message, String cardPosition);
+    void notifyInitCard(boolean roundEnded, String currentPlayerId, String[] cards);
 }

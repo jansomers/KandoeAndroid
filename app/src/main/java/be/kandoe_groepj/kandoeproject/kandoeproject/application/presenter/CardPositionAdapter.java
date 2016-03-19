@@ -15,9 +15,6 @@ import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Card;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.CardPosition;
 
-/**
- * Created by Jan on 18/03/2016.
- */
 public class CardPositionAdapter extends RecyclerView.Adapter<CardPositionAdapter.CardPositionViewHolder> {
     private LayoutInflater inflater;
     private List<Card> cards = Collections.emptyList();

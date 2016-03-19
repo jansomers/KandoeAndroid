@@ -14,4 +14,5 @@
     <color name="whiteSmoke">#F9F9F9</color>
     <color name="controlNormal">#c5c5c5</color>
     <color name="facebookDark">#3b5998</color>
+    <color name="textTerniary">#e74c3c</color>
 </resources>
