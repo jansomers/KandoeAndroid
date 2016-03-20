@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.helper;
 
 import android.content.SharedPreferences;
 import android.util.Base64;

@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners;
 
 import android.view.View;
 

@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,12 +24,12 @@ import java.util.List;
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionAdapter;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionClickListener;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.SessionItemClickListener;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TypescriptTypeAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.OnFinishListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.adapters.SessionAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionItemClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TypescriptTypeAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -173,9 +177,29 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
 
     private void configToolbar() {
         setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pop_up_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                recyclerView.setVisibility(View.GONE);
+                TokenIO.saveToken("");
+                Intent intent = new Intent(SessionActivity.this, LoginActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+        return true;
     }
 
     @Override

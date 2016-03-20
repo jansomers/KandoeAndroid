@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.helper;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.helper;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

@@ -1,35 +1,27 @@
 package be.kandoe_groepj.kandoeproject;
 
-import android.content.Intent;
-import android.support.test.rule.ActivityTestRule;
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.OnFinishListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.view.SessionActivity;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
 
 //import android.support.test.espresso.contrib.RecyclerViewActions;
 
 @RunWith(AndroidJUnit4.class)
-public class SessionTest {
+public class SessionTests {
 
     @Rule
-    public final ActivityTestRule<SessionActivity> main = new ActivityTestRule<>(SessionActivity.class, true, false);
+    public final ActivityRule<SessionActivity> main = new ActivityRule<>(SessionActivity.class);
 
-    //We gaan ervan uit dat Rob zijn account bestaat met dezelfde token
+    /*//We gaan ervan uit dat Rob zijn account bestaat met dezelfde token
     @Test
     public void testSessionOverview() {
         Intent intent = new Intent();
@@ -50,5 +42,36 @@ public class SessionTest {
                 }
             }
         });
+    }*/
+
+    @Test
+    public void itemsDisplayed() {
+        onView(withId(R.id.recyclerSessions)).check(ViewAssertions.matches(isDisplayed()));
+        onView(withId(R.id.toolbar)).check(ViewAssertions.matches(isDisplayed()));
+
     }
+
+    /*@Test
+    public void optionsMenuDisplayed() {
+        onView(withId(R.menu.pop_up_menu)).check(ViewAssertions.matches(isDisplayed()));;
+    }
+    @Test
+    public void optionItemLogoutDisplayed() {
+        onView(withId(R.menu.pop_up_menu)).perform(ViewActions.click());
+        onView(withId(R.id.logout)).check(ViewAssertions.matches(isDisplayed()));
+    }
+
+    @Test
+    public void testLogout() {
+        onView(withId(R.menu.pop_up_menu)).perform(ViewActions.click());
+        onView(withId(R.id.logout)).check(ViewAssertions.matches(isDisplayed()));
+        onView(withId(R.id.logout)).perform(ViewActions.click());
+        //Sleep to let it do it's job
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        intended(hasComponent(LoginActivity.class.getName()));
+    }*/
 }

@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.login;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +14,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 
 import be.kandoe_groepj.kandoeproject.R;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.view.SessionActivity;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.LoginPresenter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.LoginPresenterImpl;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
@@ -99,5 +100,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         startActivity(new Intent(this, SessionActivity.class));
 
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

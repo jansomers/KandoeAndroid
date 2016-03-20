@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.login;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -24,7 +24,8 @@ import java.util.Collections;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApiFactory;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.OnLoginFinishedListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

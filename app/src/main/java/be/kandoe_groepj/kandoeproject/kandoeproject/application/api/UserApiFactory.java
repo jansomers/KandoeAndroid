@@ -3,7 +3,7 @@ package be.kandoe_groepj.kandoeproject.kandoeproject.application.api;
 import com.google.gson.GsonBuilder;
 
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TypescriptTypeAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TypescriptTypeAdapter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.adapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -19,7 +19,8 @@ import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApi;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.UserApiFactory;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.User;
-import be.kandoe_groepj.kandoeproject.kandoeproject.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TokenIO;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.OnFinishListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

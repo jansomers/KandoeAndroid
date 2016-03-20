@@ -1,4 +1,4 @@
-package be.kandoe_groepj.kandoeproject.kandoeproject.login;
+package be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter;
 
 import android.app.Activity;
 

@@ -9,6 +9,7 @@
         <item name="colorControlNormal">#c5c5c5</item>
         <item name="colorControlActivated">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
 
     </style>
 
@@ -71,6 +72,23 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Toolbar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="Toolbar_Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="MyActionButtonOverflow">
+        <item name="android:padding">10dp</item>
+        <item name="android:src">@drawable/ic_account_circle_24dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:contentDescription">"Logout"</item>
+    </style>
 
 
 </resources>
