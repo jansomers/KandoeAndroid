@@ -84,6 +84,11 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 

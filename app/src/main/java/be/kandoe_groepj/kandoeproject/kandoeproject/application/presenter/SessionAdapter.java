@@ -79,6 +79,7 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
         getUsersInCurrent(current);
         String currentUsername = getCurrentUserName(current.getCurrentPlayerId());
         holder.sessionTitle.setText(current.getName());
+
         if (current.isInProgress() && !current.isPreGame()) {
             if (current.getCurrentPlayerId().equals(TokenIO.getUserId())) {
                 holder.userTurn.setText(YOUR_TURN);

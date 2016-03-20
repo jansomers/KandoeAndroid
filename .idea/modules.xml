@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kandoe.iml" filepath="$PROJECT_DIR$/Kandoe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KandoeProjectIP2.iml" filepath="$PROJECT_DIR$/KandoeProjectIP2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
