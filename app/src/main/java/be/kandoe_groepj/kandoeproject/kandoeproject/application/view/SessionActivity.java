@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,13 +40,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SessionActivity extends Activity implements OnFinishListener {
+public class SessionActivity extends AppCompatActivity implements OnFinishListener {
 
     private final String TITEL = "Sessie Overzicht";
     private final String BASE_URL = "http://kandoe.be/api/"; //"http://10.0.3.2:8080/api/";
 
-    //@Nullable @Bind(R.id.toolbar)
-    //Toolbar toolbar;
+    @Nullable @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Nullable @Bind(R.id.recyclerSessions)
     RecyclerView recyclerView;
@@ -175,8 +178,8 @@ public class SessionActivity extends Activity implements OnFinishListener {
 
 
     private void configToolbar() {
-        //setSupportActionBar(toolbar);
-        //ActionBar actionBar = getSupportActionBar();
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
     }
 
     @Override
