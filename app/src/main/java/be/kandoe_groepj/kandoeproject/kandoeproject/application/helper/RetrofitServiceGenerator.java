@@ -11,12 +11,9 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Jan on 15/03/2016.
- */
 public class RetrofitServiceGenerator {
 
-    public static final String API_BASE_URL = "http://10.0.3.2:8080/api/";
+    public static final String API_BASE_URL = "http://kandoe.be/api/"; //"http://10.0.3.2:8080/api/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

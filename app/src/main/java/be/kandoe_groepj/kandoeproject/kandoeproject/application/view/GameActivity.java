@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity implements OnFinishListener,
     private CardApi cardApi;
     private CardPositionApi cardPositionApi;
     private SessionApi sessionApi;
-    private final String BASE_URL ="http://10.0.3.2:8080/api/" ;
+    private final String BASE_URL = "http://kandoe.be/api/"; //"http://10.0.3.2:8080/api/" ;
     private Session session;
     private String selectedCardId;
 

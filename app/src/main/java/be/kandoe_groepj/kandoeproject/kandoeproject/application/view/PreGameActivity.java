@@ -42,7 +42,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PreGameActivity extends AppCompatActivity implements OnFinishListener, SocketListener {
 
-    private final String BASE_URL ="http://10.0.3.2:8080/api/";
+    private final String BASE_URL = "http://kandoe.be/api/"; //"http://10.0.3.2:8080/api/";
     private final String TITEL = "KaartSelectie ";
 
     //region binds

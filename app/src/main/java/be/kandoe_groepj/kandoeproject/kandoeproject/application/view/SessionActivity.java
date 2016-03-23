@@ -1,14 +1,13 @@
 package be.kandoe_groepj.kandoeproject.kandoeproject.application.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,13 +22,13 @@ import java.util.List;
 
 import be.kandoe_groepj.kandoeproject.R;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.api.SessionApi;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.OnFinishListener;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.adapters.SessionAdapter;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionClickListener;
-import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionItemClickListener;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TokenIO;
 import be.kandoe_groepj.kandoeproject.kandoeproject.application.helper.TypescriptTypeAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.model.Session;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.adapters.SessionAdapter;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.OnFinishListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionClickListener;
+import be.kandoe_groepj.kandoeproject.kandoeproject.application.presenter.listeners.SessionItemClickListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -38,18 +37,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SessionActivity extends AppCompatActivity implements OnFinishListener {
+public class SessionActivity extends Activity implements OnFinishListener {
 
     private final String TITEL = "Sessie Overzicht";
-    private final String BASE_URL = "http://10.0.3.2:8080/api/";
+    private final String BASE_URL = "http://kandoe.be/api/"; //"http://10.0.3.2:8080/api/";
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    //@Nullable @Bind(R.id.toolbar)
+    //Toolbar toolbar;
 
-    @Bind(R.id.recyclerSessions)
+    @Nullable @Bind(R.id.recyclerSessions)
     RecyclerView recyclerView;
 
-    @Bind(R.id.swipeSession)
+    @Nullable @Bind(R.id.swipeSession)
     SwipeRefreshLayout swipeRefreshLayout;
 
     public SessionAdapter getAdapter() {
@@ -69,8 +68,8 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
     RecyclerView.OnItemTouchListener onItemTouchListener;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initSharedPref();
         setContentView(R.layout.activity_session);
+        initSharedPref();
         setTitle(TITEL);
         ButterKnife.bind(this);
         //Toolbar settings
@@ -176,8 +175,8 @@ public class SessionActivity extends AppCompatActivity implements OnFinishListen
 
 
     private void configToolbar() {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        //setSupportActionBar(toolbar);
+        //ActionBar actionBar = getSupportActionBar();
     }
 
     @Override

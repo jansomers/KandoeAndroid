@@ -13,7 +13,8 @@ public class UserApiFactory {
 
     public static UserApi getApi() {
         return api == null ? (api = new Retrofit.Builder()
-                .baseUrl("http://10.0.3.2:8080/api/")
+                //.baseUrl("http://10.0.3.2:8080/api/")
+                .baseUrl("http://kandoe.be/api/")
                 .addConverterFactory(
                         GsonConverterFactory.create(new GsonBuilder().registerTypeAdapter(User.class, new TypescriptTypeAdapter<>(User.class)).create()))
                 .build().create(UserApi.class)) : api;

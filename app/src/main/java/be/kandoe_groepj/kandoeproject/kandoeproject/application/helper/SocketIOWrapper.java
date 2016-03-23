@@ -22,7 +22,8 @@ public class SocketIOWrapper {
 
     private void initSocket(String circleSessionId) {
         try {
-            socket = IO.socket("http://10.0.3.2:8080");
+            //socket = IO.socket("http://10.0.3.2:8080");
+            socket = IO.socket("http://kandoe.be:8000");
             joinRoom(circleSessionId);
             initEvents();
             socket.connect();
