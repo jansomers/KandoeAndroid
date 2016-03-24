@@ -34,18 +34,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         super.onCreate(savedInstanceState);
         TokenIO.initSharedPreferences(getSharedPreferences("Test",Context.MODE_PRIVATE));
         String token = TokenIO.loadToken();
-        Log.d("test", "TOKEN LOGIN START: " + token);
-        if (token.equals("")) {
-
-        } else {
-
-            TokenIO.removeToken();
-
-        }
+        if (!token.equals(""))
+            navigateToHome();
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         setContentView(R.layout.activity_login);
-
         bindComponents();
         addEventsToComponents();
         presenter = new LoginPresenterImpl(this);
